@@ -134,7 +134,7 @@ function finalizeRow(guess) {
 
   if (guess === ANSWER) {
     gameOver = true;
-    setMessage("You found it!", "success");
+    setMessage("Are you Shore?", "success");
     window.alert("Are you SHORE?");
     return;
   }
