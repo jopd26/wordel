@@ -1,5 +1,4 @@
 const ANSWER = "SHORE";
-const MAX_GUESSES = 6;
 const KEY_ROWS = [
   ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -136,12 +135,6 @@ function finalizeRow(guess) {
     gameOver = true;
     setMessage("Are you Shore?", "success");
     window.alert("Are you SHORE?");
-    return;
-  }
-
-  if (currentRow === MAX_GUESSES - 1) {
-    gameOver = true;
-    setMessage(`Out of guesses! The word was ${ANSWER}.`, "danger");
     return;
   }
 
