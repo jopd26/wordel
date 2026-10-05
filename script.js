@@ -15,21 +15,31 @@ let currentRow = 0;
 let currentGuess = "";
 let gameOver = false;
 
+function addRow() {
+  const row = document.createElement("div");
+  row.className = "row";
+
+  const cells = [];
+  for (let cellIndex = 0; cellIndex < ANSWER.length; cellIndex += 1) {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    row.appendChild(cell);
+    cells.push(cell);
+  }
+
+  rows.push({ row, cells });
+  boardElement.appendChild(row);
+}
+
 function buildBoard() {
-  for (let rowIndex = 0; rowIndex < MAX_GUESSES; rowIndex += 1) {
-    const row = document.createElement("div");
-    row.className = "row";
+  for (let rowIndex = 0; rowIndex < 6; rowIndex += 1) {
+    addRow();
+  }
+}
 
-    const cells = [];
-    for (let cellIndex = 0; cellIndex < ANSWER.length; cellIndex += 1) {
-      const cell = document.createElement("div");
-      cell.className = "cell";
-      row.appendChild(cell);
-      cells.push(cell);
-    }
-
-    rows.push({ row, cells });
-    boardElement.appendChild(row);
+function ensureBoardRow(rowIndex) {
+  while (rows.length <= rowIndex) {
+    addRow();
   }
 }
 
@@ -62,6 +72,8 @@ function setMessage(text, tone = "neutral") {
 }
 
 function updateCurrentRow() {
+  ensureBoardRow(currentRow);
+
   const currentCells = rows[currentRow].cells;
   currentCells.forEach((cell, index) => {
     const letter = currentGuess[index] || "";
@@ -139,6 +151,7 @@ function finalizeRow(guess) {
   }
 
   currentRow += 1;
+  ensureBoardRow(currentRow);
   currentGuess = "";
   setMessage("Keep going!");
   updateCurrentRow();
